@@ -18,7 +18,7 @@ public class Login {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public User getUserByUsername(String username){
-        String baseQuery = "select username, password from user where username = :username";
+        String baseQuery = "select id, id_role as idRole, username, password from \"user\" where username = :username";
 
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("username", username);

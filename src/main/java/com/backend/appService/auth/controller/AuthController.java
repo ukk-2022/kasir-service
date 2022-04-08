@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Controller
-@RequestMapping(path = "/api/auht")
+@RequestMapping(path = "/api/auth")
 public class AuthController {
 
     @Autowired
@@ -39,6 +39,7 @@ public class AuthController {
                         nasabahResponse.setId(useradmindb.getId());
                         nasabahResponse.setIdRole(useradmindb.getIdRole());
                         nasabahResponse.setTokenKey(token);
+                        nasabahResponse.setIdRole(useradmindb.getIdRole());
                         login.addInfo(nasabahResponse);
                     } else {
                         nasabahResponse.setResponseMessage("Password yang Anda Masukkan Salah");
@@ -52,7 +53,7 @@ public class AuthController {
         } else {
             nasabahResponse.setResponseMessage("User Tidak Ditemukan");
         }
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(nasabahResponse);
     }
 
     @PostMapping("/checking")

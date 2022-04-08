@@ -23,6 +23,10 @@ public class UserDAO {
                 "values(:id, :username, :password, :idRole)";
 
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("id", user.getId());
+        parameterSource.addValue("username", user.getUsername());
+        parameterSource.addValue("password", user.getPassword());
+        parameterSource.addValue("idRole", user.getIdRole());
 
         jdbcTemplate.update(baseQuery, parameterSource);
     }
