@@ -40,6 +40,19 @@ public class MenuDAO {
         return Optional.of(data);
     }
 
+    public Optional<Menu> findById(Integer id) throws DataAccessException{
+        String baseQuery = "select m.id as id, m.nama_menu as namaNemu, m.id_kategori as idKategori, " +
+                "m.v_harga_satuan as hargaSatuan, m.deskripsi as deskripsi, m.file as file, r.stok as vol from menu m left join " +
+                "repo r on m.id = r.id_menu where m.id = :id";
+
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("id", id);
+
+        Menu data = jdbcTemplate.queryForObject(baseQuery, parameterSource, new BeanPropertyRowMapper<>(Menu.class));
+
+        return Optional.of(data);
+    }
+
     public List<Menu> findByKategori(Integer idKategori) throws DataAccessException{
         String baseQuery = "select m.id as id, m.nama_menu as namaMenu, m.id_kategori as idKategori, " +
                 "m.v_harga_satuan as hargaSatuan, m.deskripsi as deskripsi, m.file as file, r.stok as vol from menu m left join " +

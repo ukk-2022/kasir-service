@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/api/menu")
@@ -53,6 +54,18 @@ public class MenuController {
     public ResponseEntity<?> findAll(){
         try{
             List<Menu> data = service.findAll();
+            return ResponseEntity.ok().body(data);
+        } catch (DataAccessException e){
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(path = "/findById/{id}")
+    public ResponseEntity<?> findById(
+            @PathVariable Integer id
+    ){
+        try{
+            Optional<Menu> data = service.findById(id);
             return ResponseEntity.ok().body(data);
         } catch (DataAccessException e){
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

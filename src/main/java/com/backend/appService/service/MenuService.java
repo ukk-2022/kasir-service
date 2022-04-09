@@ -47,6 +47,10 @@ public class MenuService {
         return dao.findByKategori(idKategori);
     }
 
+    public Optional<Menu> findById(Integer id) {
+        return dao.findById(id);
+    }
+
     public void delete(Integer id){
         dao.delete(id);
     }
