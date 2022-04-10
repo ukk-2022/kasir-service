@@ -13,10 +13,11 @@ import java.util.List;
 public class Transaksi {
 
     private Long idTransaksi;
-    private Long vJumlah;
-    private Long vMasuk;
-    private Long vKeluar;
+    private Long uangJumlah;
+    private Long uangMasuk;
+    private Long uangKeluar;
     private String idPegawai;
+    private String namaPegawai;
     private String statusTransaksi;
     private List<DetailTransaksi> daftarMenu;
     private Date tanggal;

@@ -32,10 +32,17 @@ public class TransaksiService {
         for (DetailTransaksi data : value.getDaftarMenu()){
             data.setIdTransaksi(nomax.getNomax());
             dao.saveDetailTransaksi(data);
+            dao.updateNomax();
         }
         nomax.setNomax(nomax.getNomax()+1);
         nomaxDAO.update(nomax);
         return value;
+    }
+
+    public Transaksi struke(){
+        Transaksi transaksi = dao.findLastTransaksi();
+        transaksi.setDaftarMenu(dao.findDetailTransaksi(transaksi.getIdTransaksi()));
+        return transaksi;
     }
 
 }
