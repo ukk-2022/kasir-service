@@ -2,6 +2,7 @@ package com.backend.appService.service;
 
 import com.backend.appService.dao.NomaxDAO;
 import com.backend.appService.dao.TransaksiDAO;
+import com.backend.appService.entity.DataTransaksi;
 import com.backend.appService.entity.DetailTransaksi;
 import com.backend.appService.entity.Nomax;
 import com.backend.appService.entity.Transaksi;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TransaksiService {
@@ -44,5 +46,10 @@ public class TransaksiService {
         transaksi.setDaftarMenu(dao.findDetailTransaksi(transaksi.getIdTransaksi()));
         return transaksi;
     }
+
+    public List<DataTransaksi> findDataTransaksi(DataTransaksi transaksi){
+        return dao.findDataTransaksi(transaksi);
+    }
+
 
 }

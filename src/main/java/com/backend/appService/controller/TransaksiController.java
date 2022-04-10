@@ -1,5 +1,6 @@
 package com.backend.appService.controller;
 
+import com.backend.appService.entity.DataTransaksi;
 import com.backend.appService.entity.Transaksi;
 import com.backend.appService.service.TransaksiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/api/transaksi")
@@ -37,6 +39,14 @@ public class TransaksiController {
         } catch (EmptyResultDataAccessException e){
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping(path = "/findDataTransaksi")
+    public ResponseEntity<?> findDataTransaksi(
+            @RequestBody DataTransaksi transaksi
+    ){
+        List<DataTransaksi> transaksis = service.findDataTransaksi(transaksi);
+        return ResponseEntity.ok().body(transaksis);
     }
 
 }

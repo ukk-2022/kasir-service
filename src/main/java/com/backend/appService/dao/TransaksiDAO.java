@@ -1,5 +1,6 @@
 package com.backend.appService.dao;
 
+import com.backend.appService.entity.DataTransaksi;
 import com.backend.appService.entity.DetailTransaksi;
 import com.backend.appService.entity.Transaksi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,30 @@ public class TransaksiDAO {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 
         jdbcTemplate.update(baseQuery, parameterSource);
+    }
+
+    public List<DataTransaksi> findDataTransaksi(DataTransaksi transaksi){
+        String baseQuery = "select id_transaksi as idTransaksi,\n" +
+                "v_jumlah as uangJumlah,\n" +
+                "u.username as namaPegawai,\n" +
+                "TO_CHAR(r.tanggal , 'DD-MM-YYYY') as dateToString\n" +
+                "from riwayat r join \"user\" u on r.id_pergawai = u.id " +
+                "where 1 = 1 ";
+
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        StringBuilder query = new StringBuilder(baseQuery);
+
+        if(transaksi.getIdPegawai() != null){
+            query.append(" and r.id_pergawai = :idPegawai");
+            parameterSource.addValue("idPegawai", transaksi.getIdTransaksi());
+        }
+
+        if(transaksi.getIdPegawai() != null){
+            query.append(" and r.tanggal = :tanggal");
+            parameterSource.addValue("tanggal", transaksi.getTanggal());
+        }
+
+        return jdbcTemplate.query(query.toString(), parameterSource, new BeanPropertyRowMapper<>(DataTransaksi.class));
     }
 
 }
