@@ -38,6 +38,26 @@ public class MenuController {
         }
     }
 
+    @PostMapping(path = "/update")
+    public ResponseEntity<?> update(
+            @RequestBody Menu menu
+    ){
+        try{
+            service.update(menu);
+            return ResponseEntity.ok().body("berhasil");
+        } catch (SQLException throwables) {
+            return new ResponseEntity<>(throwables.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(path = "/delete")
+    public ResponseEntity<?> detele(
+            @RequestBody Menu menu
+    ){
+        service.disActive(menu.getId());
+        return ResponseEntity.ok().body("berhasil");
+    }
+
     @PostMapping(path = "/tambah-stok")
     public ResponseEntity<?> tambahStok(
             @RequestBody Menu menu

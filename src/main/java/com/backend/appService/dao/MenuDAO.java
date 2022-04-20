@@ -21,12 +21,13 @@ public class MenuDAO {
     public List<Menu> findAll() throws DataAccessException{
         String baseQuery = "select m.id as id, m.nama_menu as namaNemu, m.id_kategori as idKategori, " +
                 "m.v_harga_satuan as hargaSatuan, m.deskripsi as deskripsi, m.file as file, r.stok as vol from menu m left join " +
-                "repo r on m.id = r.id_menu";
+                "repo r on m.id = r.id_menu where m.aktif = '1'";
 
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 
         return jdbcTemplate.query(baseQuery, parameterSource, new BeanPropertyRowMapper<>(Menu.class));
     }
+
 
     public Optional<Menu> findLastTransaksi() throws DataAccessException{
         String baseQuery = "select m.id as id, m.nama_menu as namaMenu, m.id_kategori as idKategori, " +
@@ -74,6 +75,30 @@ public class MenuDAO {
         parameterSource.addValue("hargaSatuan", menu.getHargaSatuan());
         parameterSource.addValue("deskripsi", menu.getDeskripsi());
         parameterSource.addValue("file", menu.getFile());
+
+        jdbcTemplate.update(query, parameterSource);
+    }
+
+    public void update(Menu menu) throws SQLException{
+        String query = "update menu set nama_menu = :namaMenu, id_kategori = :idKategori, v_harga_satuan = :hargaSatuan,\n" +
+                "deskripsi = :deskripsi, file = :file where id = :id";
+
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("namaMenu", menu.getNamaNemu());
+        parameterSource.addValue("idKategori", menu.getIdKategori());
+        parameterSource.addValue("hargaSatuan", menu.getHargaSatuan());
+        parameterSource.addValue("deskripsi", menu.getDeskripsi());
+        parameterSource.addValue("file", menu.getFile());
+        parameterSource.addValue("id", menu.getId());
+
+        jdbcTemplate.update(query, parameterSource);
+    }
+
+    public void disActive(Integer id){
+        String query = "update menu set aktif = '0' where id = :id";
+
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("id", id);
 
         jdbcTemplate.update(query, parameterSource);
     }

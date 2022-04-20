@@ -35,6 +35,14 @@ public class MenuService {
         dao.newRepo(menu);
     }
 
+    public void update(Menu menu) throws SQLException{
+        dao.update(menu);
+    }
+
+    public void disActive(Integer id){
+        dao.disActive(id);
+    }
+
     public void tambahStok(Menu menu) throws SQLException {
         dao.tambahStok(menu);
     }
